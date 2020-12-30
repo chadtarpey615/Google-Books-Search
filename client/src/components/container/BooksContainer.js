@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import API from "../../utils/API";
+import Container from "../List/Container"
+import Header from "../header/Header"
+import Col from "../List/Col.js";
+import Row from "../List/Row";
 
 
 function BookContainer (){
@@ -31,7 +35,9 @@ function BookContainer (){
     }
 
     return(
-        <>
+        <Container>
+            <Row>
+            <Header />
             <input type="text" name="input" onChange={handleInputChange} className="form-control form-control-lg" placeholder="Search"></input>
             <button type="submit" onClick={handleFormSubmit} className="btn btn-primary mb-2">Search</button>
             {resultArr.map(data => {
@@ -42,7 +48,8 @@ function BookContainer (){
                     </>
                 )
             })}
-        </>
+            </Row>
+        </Container>
     )
 }
 
