@@ -6,48 +6,52 @@ import Col from "../List/Col.js";
 import Row from "../List/Row";
 
 
-function BookContainer (){
-    const [search, setSearch] = useState({input: ""})
-    const [resultArr, setResultArr] =useState([])
+function BookContainer() {
+    const [search, setSearch] = useState({ input: "" })
+    const [resultArr, setResultArr] = useState([])
 
-    function searchBooks (query){
+    function searchBooks(query) {
         // console.log(query)
         API.search(query.input)
-        .then(res => {
-            console.log(res.data)
-            console.log(resultArr)
-            setResultArr(res.data.items);
-        }).catch(err => {
-            console.log(err)
-        })
+            .then(res => {
+                console.log(res.data)
+                console.log(resultArr)
+                setResultArr(res.data.items);
+            }).catch(err => {
+                console.log(err)
+            })
     };
 
-    function handleInputChange (event){
-        const {value, name} = event.target
-        setSearch({[name]: value})
+    function handleInputChange(event) {
+        const { value, name } = event.target
+        setSearch({ [name]: value })
         console.log(search);
     }
 
-    function handleFormSubmit (event) {
+    function handleFormSubmit(event) {
         event.preventDefault();
         searchBooks(search);
-        
+
     }
 
-    return(
+    return (
         <Container>
             <Row>
-            <Header />
-            <input type="text" name="input" onChange={handleInputChange} className="form-control form-control-lg" placeholder="Search"></input>
-            <button type="submit" onClick={handleFormSubmit} className="btn btn-primary mb-2">Search</button>
-            {resultArr.map(data => {
-                return (
-                    <>
-                <p>title: {data.volumeInfo.title}</p>
-                    <p>book ID: {data.id}</p>
-                    </>
-                )
-            })}
+                <Header />
+                <input type="text" name="input" onChange={handleInputChange} className="form-control form-control-lg" placeholder="Search"></input>
+                <button type="submit" onClick={handleFormSubmit} className="btn btn-primary mb-2">Search</button>
+                {resultArr.map(data => {
+                    return (
+                        <Col size="md-6">
+                            <h4>title: {data.volumeInfo.title}</h4>
+                            <p>book ID: {data.id}</p>
+                            <img src={data.volumeInfo.imageLinks.smallThumbnail} />
+                            <p>{data.volumeInfo.description}</p>
+                            <button>View</button>
+                            <button>Save</button>
+                        </Col>
+                    )
+                })}
             </Row>
         </Container>
     )
