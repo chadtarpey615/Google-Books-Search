@@ -1,34 +1,49 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import API from "../../utils/API";
 
 
-class BookContainer extends Component {
-    state = {
-        result: {},
-        search: ""
+function BookContainer (){
+    const [search, setSearch] = useState({input: ""})
+    const [resultArr, setResultArr] =useState([])
+
+    function searchBooks (query){
+        // console.log(query)
+        API.search(query.input)
+        .then(res => {
+            console.log(res.data)
+            console.log(resultArr)
+            setResultArr(res.data.items);
+        }).catch(err => {
+            console.log(err)
+        })
     };
 
-    searchBooks = query => {
-    API.search(query)
-    .then(res => {
-        console.log(res.data)
-    }).catch(err => {
-        console.log(err)
-    })
-    };
-
-    handleInputChange = event => {
-        const value = event.target.value;
-        const name = event.target.name;
-        this.setState({
-            [name]: value
-        });
+    function handleInputChange (event){
+        const {value, name} = event.target
+        setSearch({[name]: value})
+        console.log(search);
     }
 
-    handleFormSubmit = event => {
-        event.preventDrfault();
-        this.searchBooks(this.state.search)
+    function handleFormSubmit (event) {
+        event.preventDefault();
+        searchBooks(search);
+        
     }
+
+    return(
+        <>
+            <input type="text" name="input" onChange={handleInputChange} className="form-control form-control-lg" placeholder="Search"></input>
+            <button type="submit" onClick={handleFormSubmit} className="btn btn-primary mb-2">Search</button>
+            {resultArr.map(data => {
+                return (
+                    <>
+                <p>title: {data.volumeInfo.title}</p>
+                    <p>book ID: {data.id}</p>
+                    </>
+                )
+            })}
+        </>
+    )
 }
 
 export default BookContainer;
