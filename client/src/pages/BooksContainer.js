@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import API from "../../utils/API";
-import Container from "../List/Container"
-import Header from "../header/Header"
-import Col from "../List/Col.js";
-import Row from "../List/Row";
+import API from "../utils/API";
+import Container from "../components/List/Container"
+import Header from "../components/header/Header"
+import Col from "../components/List/Col.js";
+import Row from "../components/List/Row";
 
 
 function BookContainer() {
@@ -21,6 +21,10 @@ function BookContainer() {
                 console.log(err)
             })
     };
+
+    function saveBook(id) {
+        
+    }
 
     function handleInputChange(event) {
         const { value, name } = event.target
@@ -48,7 +52,7 @@ function BookContainer() {
                             <img src={data.volumeInfo.imageLinks.smallThumbnail} />
                             <p>{data.volumeInfo.description}</p>
                             <button>View</button>
-                            <button>Save</button>
+                            <button onClick={() => saveBook(data.id)}>Save</button>
                         </Col>
                     )
                 })}
