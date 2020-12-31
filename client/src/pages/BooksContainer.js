@@ -53,7 +53,7 @@ function BookContainer() {
                             <img src={data.volumeInfo.imageLinks.thumbnail} />
                             <p>{data.volumeInfo.description}</p>
                             <button>View</button>
-                            <button onClick={() => saveBook(data.id)}>Save</button>
+                            <button onClick={() => saveBook({data:data.search})}>Save</button>
                         </Col>
                     )
                 })}

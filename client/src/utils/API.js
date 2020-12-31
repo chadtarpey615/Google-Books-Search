@@ -7,11 +7,11 @@ export default {
         return axios.get(url + query)
     },
 
-    saveBook: book => {
-        return axios.post("/api/books", book)
+    saveBook: books => {
+        return axios.post("api/books", books)
     },
 
     loadBooks: function() {
-        return axios.get("/api/books")
+        return axios.get("api/books")
     }
 }
