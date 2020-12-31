@@ -23,9 +23,16 @@ function BookContainer() {
     };
 
     function saveBook(id) {
-        API.saveBook(id)
+        API.saveBook({
+            title: resultArr.volumeInfo.title,
+            author: resultArr.volumeInfo.authors[0],
+            image: resultArr.volumeInfo.imageLinks.thumbnail,
+            description: resultArr.volumeInfo.description,
+            link:resultArr.selfLink
+        })
+       
         
-    }
+     }
 
     function handleInputChange(event) {
         const { value, name } = event.target
@@ -49,10 +56,12 @@ function BookContainer() {
                     return (
                         <Col size="md-6">
                             <h4>title: {data.volumeInfo.title}</h4>
+                            <h6>Author: {data.volumeInfo.authors[0]}</h6>
+                            <p>Link: {data.selfLink}</p>
                             <p>book ID: {data.id}</p>
                             <img src={data.volumeInfo.imageLinks.thumbnail} />
                             <p>{data.volumeInfo.description}</p>
-                            <button>View</button>
+                            <button type="button" onClick={(e) => {window.location.href=data.volumeInfo.infoLink}}>View</button>
                             <button onClick={() => saveBook({data:data.search})}>Save</button>
                         </Col>
                     )

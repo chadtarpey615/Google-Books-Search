@@ -11,7 +11,6 @@ function App() {
     <div>
       <Navbar />
     <Route exact path="/" component={BooksContainer} />
-    <Route path="/saved" component={SavedBooks} />
     </div>
     </Router>
   );
