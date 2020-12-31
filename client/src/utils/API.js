@@ -5,5 +5,13 @@ const url = "https://www.googleapis.com/books/v1/volumes?q=";
 export default {
     search: function(query) {
         return axios.get(url + query)
+    },
+
+    saveBook: book => {
+        return axios.post("/api/books", book)
+    },
+
+    loadBooks: function() {
+        return axios.get("/api/books")
     }
 }

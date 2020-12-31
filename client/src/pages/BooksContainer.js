@@ -23,6 +23,7 @@ function BookContainer() {
     };
 
     function saveBook(id) {
+        API.saveBook(id)
         
     }
 
@@ -49,7 +50,7 @@ function BookContainer() {
                         <Col size="md-6">
                             <h4>title: {data.volumeInfo.title}</h4>
                             <p>book ID: {data.id}</p>
-                            <img src={data.volumeInfo.imageLinks.smallThumbnail} />
+                            <img src={data.volumeInfo.imageLinks.thumbnail} />
                             <p>{data.volumeInfo.description}</p>
                             <button>View</button>
                             <button onClick={() => saveBook(data.id)}>Save</button>
