@@ -6,7 +6,7 @@ import Col from "../components/List/Col.js";
 import Row from "../components/List/Row";
 
 
-function BookContainer() {
+function BookContainer(props) {
     const [search, setSearch] = useState({ input: "" })
     const [resultArr, setResultArr] = useState([])
 
@@ -24,13 +24,13 @@ function BookContainer() {
 
     function saveBook(id) {
         API.saveBook({
-            title: resultArr.volumeInfo.title,
-            author: resultArr.volumeInfo.authors[0],
-            image: resultArr.volumeInfo.imageLinks.thumbnail,
-            description: resultArr.volumeInfo.description,
-            link:resultArr.selfLink
+            title: resultArr.title,
+            author: resultArr.author,
+            image: resultArr.image,
+            description: resultArr.description,
+            link:resultArr.link
         })
-       
+       console.log(resultArr)
         
      }
 
@@ -52,21 +52,22 @@ function BookContainer() {
                 <Header />
                 <input type="text" name="input" onChange={handleInputChange} className="form-control form-control-lg" placeholder="Search"></input>
                 <button type="submit" onClick={handleFormSubmit} className="btn btn-primary mb-2">Search</button>
+                </Row>
                 {resultArr.map(data => {
                     return (
+                        <Row>
                         <Col size="md-6">
                             <h4>title: {data.volumeInfo.title}</h4>
                             <h6>Author: {data.volumeInfo.authors[0]}</h6>
-                            <p>Link: {data.selfLink}</p>
                             <p>book ID: {data.id}</p>
                             <img src={data.volumeInfo.imageLinks.thumbnail} />
                             <p>{data.volumeInfo.description}</p>
                             <button type="button" onClick={(e) => {window.location.href=data.volumeInfo.infoLink}}>View</button>
-                            <button onClick={() => saveBook({data:data.search})}>Save</button>
+                            <button onClick={() => saveBook(data.id)}>Save</button>
                         </Col>
+                        </Row>
                     )
                 })}
-            </Row>
         </Container>
     )
 }
