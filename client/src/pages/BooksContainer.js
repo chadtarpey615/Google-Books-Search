@@ -4,6 +4,7 @@ import Container from "../components/List/Container"
 import Header from "../components/header/Header"
 import Col from "../components/List/Col.js";
 import Row from "../components/List/Row";
+import { Button } from "reactstrap";
 
 
 function BookContainer(props) {
@@ -28,11 +29,11 @@ function BookContainer(props) {
             author: resultArr.author,
             image: resultArr.image,
             description: resultArr.description,
-            link:resultArr.link
+            link: resultArr.link
         })
-       console.log(resultArr)
-        
-     }
+        console.log(resultArr)
+
+    }
 
     function handleInputChange(event) {
         const { value, name } = event.target
@@ -52,22 +53,28 @@ function BookContainer(props) {
                 <Header />
                 <input type="text" name="input" onChange={handleInputChange} className="form-control form-control-lg" placeholder="Search"></input>
                 <button type="submit" onClick={handleFormSubmit} className="btn btn-primary mb-2">Search</button>
-                </Row>
-                {resultArr.map(data => {
-                    return (
-                        <Row>
-                        <Col size="md-6">
+            </Row>
+            {resultArr.map(data => {
+                return (
+                    <Row>
+                        <Col size="md-3">
                             <h4>title: {data.volumeInfo.title}</h4>
                             <h6>Author: {data.volumeInfo.authors[0]}</h6>
                             <p>book ID: {data.id}</p>
                             <img src={data.volumeInfo.imageLinks.thumbnail} />
-                            <p>{data.volumeInfo.description}</p>
-                            <button type="button" onClick={(e) => {window.location.href=data.volumeInfo.infoLink}}>View</button>
-                            <button onClick={() => saveBook(data.id)}>Save</button>
                         </Col>
-                        </Row>
-                    )
-                })}
+                        <Col size="md-6">
+                            <p>{data.volumeInfo.description}</p>
+                        </Col>
+
+                        <Col size="md-3">
+                            <Button type="button" onClick={(e) => { window.location.href = data.volumeInfo.infoLink }}>View</Button>
+                            <Button onClick={() => saveBook(data.id)}>Save</Button>
+
+                        </Col>
+                    </Row>
+                )
+            })}
         </Container>
     )
 }
