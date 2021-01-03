@@ -9,11 +9,15 @@ export default function Navbar() {
       </a>
       <Link 
       to="/"
+      style={{ color: "white"}}
+      className="px-2"
       >
         Search Books
       </Link>
       <Link 
       to="/saved"
+      style={{ color: "white"}}
+
       >
         Saved Books
       </Link>
