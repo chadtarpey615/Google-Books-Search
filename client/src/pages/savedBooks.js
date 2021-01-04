@@ -4,14 +4,18 @@ import Container from "../components/List/Container"
 import Header from "../components/header/Header"
 import Col from "../components/List/Col.js";
 import Row from "../components/List/Row";
+import { Button } from "reactstrap";
+
 
 function SavedBooks() {
-    const [books, setBooks] = useState({});
+    const [books, setBooks] = useState([]);
 
     useEffect(() => {
         API.loadBooks()
         .then(res => {
-            setBooks(res.data.items)
+            console.log(res)
+            setBooks(res.data)
+
         }).catch(err => {
             console.log(err)
         })
@@ -40,18 +44,44 @@ function SavedBooks() {
 
     return (
         <>
+        <div>
+            {books.length ? (
+                <div>
+                {books.map(data => {
+                    return(
+                    <div>
+
+                    <Row>
+        <Header/>
+                        </Row>
+                        <Row>
+
+                        <Col size="md-3">
+                    <h4>title: {data.title}</h4>
+                    <h4>Author: {data.author}</h4>
+                    <img src={data.image}/>
+                    </Col>
+                        <Col size="md-6">
+                    <p>{data.description}</p>
+
+                    </Col>
+                    <Col size="md-2">
+                    <Button type="button" onClick={(e) => { window.location.href = data.link }}>View</Button>
+
+                    </Col>
+                    </Row>
+                    </div>
+
+
+                    )
+                })}
+                </div>
+            ): (
+                <h3 className="text-center">No saved books</h3>
+            )}
+        </div>
         
-        {books.map(data => {
-            return(
-            <div>
-            <h4>title: {data.volumeInfo.title}</h4>
-            <p>book ID: {data.id}</p>
-            <img src={data.volumeInfo.imageLinks.smallThumbnail} />
-            <p>{data.volumeInfo.description}</p>
-            </div>
-            )
-        })}
-        
+        hi
         </>
     )
 }

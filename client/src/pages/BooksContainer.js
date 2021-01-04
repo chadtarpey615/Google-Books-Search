@@ -23,15 +23,21 @@ function BookContainer(props) {
             })
     };
 
-    function saveBook(id) {
-        API.saveBook({
-            title: resultArr.title,
-            author: resultArr.author,
-            image: resultArr.image,
-            description: resultArr.description,
-            link: resultArr.link
-        })
-        console.log(resultArr)
+    function saveBook(event) {
+        
+        let bookID = event.target.getAttribute("id")
+        API.searchById(bookID)
+            .then(res => {
+                console.log(res)
+                API.saveBook({
+                    title: res.data.volumeInfo.title,
+                    author: res.data.volumeInfo.authors[0],
+                    image: res.data.volumeInfo.imageLinks.thumbnail,
+                    description: res.data.volumeInfo.description,
+                    link: res.data.volumeInfo.infoLink
+                })
+            })
+        
 
     }
 
@@ -69,7 +75,7 @@ function BookContainer(props) {
 
                         <Col size="md-3">
                             <Button type="button" onClick={(e) => { window.location.href = data.volumeInfo.infoLink }}>View</Button>
-                            <Button onClick={() => saveBook(data.id)}>Save</Button>
+                            <Button id={data.id} onClick={saveBook}>Save</Button>
 
                         </Col>
                     </Row>

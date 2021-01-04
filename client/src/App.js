@@ -11,6 +11,8 @@ function App() {
     <div>
       <Navbar />
     <Route exact path="/" component={BooksContainer} />
+    <Route exact path="/saved" component={SavedBooks} />
+
     </div>
     </Router>
   );

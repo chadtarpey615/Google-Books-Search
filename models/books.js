@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const googleSchema = new Schema({
+const booksSchema = new Schema({
     title: { type: String, required: true },
     author: { type: String, required: true },
     image: { type: String},
@@ -12,6 +12,6 @@ const googleSchema = new Schema({
     
 });
 
-const Google = mongoose.model("Google", googleSchema);
+const Books = mongoose.model("Books", booksSchema);
 
-module.exports = Google;
+module.exports = Books;
