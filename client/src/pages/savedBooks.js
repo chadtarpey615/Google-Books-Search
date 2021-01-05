@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import API from "../utils/API";
 import Container from "../components/List/Container"
-import Header from "../components/header/Header"
+import SavedHeader from "../components/header/SavedHeader"
 import Col from "../components/List/Col.js";
 import Row from "../components/List/Row";
 import { Button } from "reactstrap";
@@ -12,75 +12,84 @@ function SavedBooks() {
 
     useEffect(() => {
         API.loadBooks()
-        .then(res => {
-            console.log(res)
-            setBooks(res.data)
+            .then(res => {
+                console.log(res)
+                setBooks(res.data)
 
-        }).catch(err => {
-            console.log(err)
-        })
+            }).catch(err => {
+                console.log(err)
+            })
     }, [])
 
-    // function loadBooks() {
-    //     API.loadBooks()
-    //     .then(res => {
-    //         setBooks(res.data.items)
-    //     }).catch(err => {
-    //         console.log(err)
-    //     })
+    function deleteBook(id) {
+       let bookID = event.target.getAttribute("id")
+        API.deleteBook(bookID)
+        .then(res => API.loadBooks()
+        .catch(err => console.log(err)))
+
+    }
+    function saveBook(event) {
         
-    //}
-    // function searchBooks(query) {
-    //     // console.log(query)
-    //     API.search(query.input)
-    //         .then(res => {
-    //             console.log(res.data)
-    //             console.log(resultArr)
-    //             setResultArr(res.data.items);
-    //         }).catch(err => {
-    //             console.log(err)
-    //         })
-    // };
+        let bookID = event.target.getAttribute("id")
+        API.searchById(bookID)
+            .then(res => {
+                console.log(res)
+                API.saveBook({
+                    title: res.data.volumeInfo.title,
+                    author: res.data.volumeInfo.authors[0],
+                    image: res.data.volumeInfo.imageLinks.thumbnail,
+                    description: res.data.volumeInfo.description,
+                    link: res.data.volumeInfo.infoLink
+                })
+            })
+        
+
+    }
+
+   
 
     return (
         <>
-        <div>
-            {books.length ? (
-                <div>
-                {books.map(data => {
-                    return(
+            <Container>
+                <SavedHeader />
+
+                {books.length ? (
                     <div>
+                        {books.map(data => {
+                            return (
+                                <div>
 
-                    <Row>
-        <Header/>
-                        </Row>
-                        <Row>
+                                    <Row>
+                                    </Row>
+                                    <Row>
 
-                        <Col size="md-3">
-                    <h4>title: {data.title}</h4>
-                    <h4>Author: {data.author}</h4>
-                    <img src={data.image}/>
-                    </Col>
-                        <Col size="md-6">
-                    <p>{data.description}</p>
+                                        <Col size="md-3">
+                                            <h4>title: {data.title}</h4>
+                                            <h4>Author: {data.author}</h4>
+                                            <img src={data.image} />
+                                        </Col>
+                                        <Col size="md-6">
+                                            <p>{data.description}</p>
 
-                    </Col>
-                    <Col size="md-2">
-                    <Button type="button" onClick={(e) => { window.location.href = data.link }}>View</Button>
+                                        </Col>
+                                        <Col size="md-2">
+                                            <Button type="button" onClick={(e) => { window.location.href = data.link }}>View</Button>
+                                            <Button id={data.id} onClick={deleteBook}>Delete</Button>
 
-                    </Col>
-                    </Row>
+
+                                        </Col>
+                                    </Row>
+                                </div>
+
+
+                            )
+                        })}
                     </div>
+                ) : (
+                        <h3 className="text-center">No saved books</h3>
+                    )}
+            </Container>
 
-
-                    )
-                })}
-                </div>
-            ): (
-                <h3 className="text-center">No saved books</h3>
-            )}
-        </div>
-        
         hi
         </>
     )
