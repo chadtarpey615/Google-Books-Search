@@ -5,46 +5,35 @@ import SavedHeader from "../components/header/SavedHeader"
 import Col from "../components/List/Col.js";
 import Row from "../components/List/Row";
 import { Button } from "reactstrap";
+import DeleteBtn from "../components/DeleteBtn/index"
 
 
 function SavedBooks() {
     const [books, setBooks] = useState([]);
 
     useEffect(() => {
-        API.loadBooks()
-            .then(res => {
-                console.log(res)
-                setBooks(res.data)
-
-            }).catch(err => {
-                console.log(err)
-            })
+        loadBooks()
     }, [])
 
+    function loadBooks() {
+        API.loadBooks()
+        .then(res => {
+            console.log(res)
+            setBooks(res.data)
+
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
     function deleteBook(id) {
-       let bookID = event.target.getAttribute("id")
-        API.deleteBook(bookID)
-        .then(res => API.loadBooks()
-        .catch(err => console.log(err)))
+        console.log(id)
+        API.deleteBook(id)
+        .then(res => loadBooks())
+        .catch(err => console.log(err));
 
     }
-    function saveBook(event) {
-        
-        let bookID = event.target.getAttribute("id")
-        API.searchById(bookID)
-            .then(res => {
-                console.log(res)
-                API.saveBook({
-                    title: res.data.volumeInfo.title,
-                    author: res.data.volumeInfo.authors[0],
-                    image: res.data.volumeInfo.imageLinks.thumbnail,
-                    description: res.data.volumeInfo.description,
-                    link: res.data.volumeInfo.infoLink
-                })
-            })
-        
-
-    }
+  
 
    
 
@@ -74,7 +63,7 @@ function SavedBooks() {
                                         </Col>
                                         <Col size="md-2">
                                             <Button type="button" onClick={(e) => { window.location.href = data.link }}>View</Button>
-                                            <Button id={data.id} onClick={deleteBook}>Delete</Button>
+                                            <Button onClick={() => deleteBook(data._id)}>Delete</Button>
 
 
                                         </Col>
@@ -90,7 +79,6 @@ function SavedBooks() {
                     )}
             </Container>
 
-        hi
         </>
     )
 }

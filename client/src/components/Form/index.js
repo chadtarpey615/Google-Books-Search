@@ -11,7 +11,7 @@ export default function Form() {
     </div>
     <div className="form-group">
       <label for="exampleInputEmail1">Search by book</label>
-      <input width="50" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter book title" />
+      <input width="50" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter book title" />
       <button>Save
       </button>
     </div>
