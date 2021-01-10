@@ -1,6 +1,6 @@
 # Google-Books-Search
 # Chad Tarpey
-![Project Image](images/fitness.png)
+![Project Image](client/src/image/screenshot.png)
 
 ---
 
@@ -54,12 +54,18 @@ The user should be able to:
 
 # Purpose
 ---
+ - You can search books using the google books api. 
+ - Then you can save books of your choice to the database that loads up on your saved books page.
+ - Then you can click the link the to view more about that book
+ - Also delete button to remove the book from the database
+
 
 
 
 # Built With these Technologies
 * Mongodb
 * Nodejs
+* React
 * Express
 * JavaScript
 * VS Code
@@ -70,10 +76,9 @@ The user should be able to:
 ## Description
 Google-Books-Search
 
-
 ---
 ## How To Use
-- Visit   https://workout-fitness.herokuapp.com/
+- Visit   https://shrouded-bayou-81095.herokuapp.com/
 - Google Chrome or any Web Browser
 ---
 ## References
